@@ -1,6 +1,7 @@
 package com.example.paymentservice.payment.adapter.`in`.web.view
 
 import com.example.paymentservice.common.WebAdapter
+import com.example.paymentservice.payment.adapter.`in`.web.request.CheckoutRequest
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 import reactor.core.publisher.Mono
@@ -10,7 +11,7 @@ import reactor.core.publisher.Mono
 class CheckOutController {
 
     @GetMapping("/")
-    fun checkOutPage(): Mono<String> {
+    fun checkOutPage(checkoutRequest: CheckoutRequest): Mono<String> {
         return Mono.just("checkout")
     }
 
