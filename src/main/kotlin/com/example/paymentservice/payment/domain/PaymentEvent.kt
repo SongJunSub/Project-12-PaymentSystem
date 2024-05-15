@@ -19,4 +19,6 @@ data class PaymentEvent (
         return paymentOrders.sumOf { it.amount }.toLong()
     }
 
+    fun isPaymentDone(): Boolean = isPaymentDone
+
 }

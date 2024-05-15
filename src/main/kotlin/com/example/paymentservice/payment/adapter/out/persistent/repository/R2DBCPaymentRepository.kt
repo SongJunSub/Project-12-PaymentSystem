@@ -15,7 +15,7 @@ class R2DBCPaymentRepository(
 ) : PaymentRepository {
 
     override fun save(paymentEvent: PaymentEvent): Mono<Void> {
-        insertPaymentEvent(paymentEvent)
+        return insertPaymentEvent(paymentEvent)
             .flatMap { selectPaymentEventId() }
             .flatMap { paymentEventId -> insertPaymentOrders(paymentEvent, paymentEventId) }
             .`as`(transactionalOperator::transactional)
@@ -35,7 +35,7 @@ class R2DBCPaymentRepository(
         databaseClient.sql(LAST_INSERT_ID_QUERY)
             .fetch()
             .first()
-            .map { (it["LAST_INSERT_ID_QUERY"] as BigInteger).toLong() }
+            .map { (it["LAST_INSERT_ID()"] as BigInteger).toLong() }
 
     private fun insertPaymentOrders(
         paymentEvent: PaymentEvent,
@@ -61,7 +61,7 @@ class R2DBCPaymentRepository(
         """.trimIndent()
 
         val INSERT_PAYMENT_ORDER_QUERY = fun (valueClauses: String) = """
-            INSERT INTO payment_orders (payment_event_id, seller_id, order_id product_id, amount, payment_order_status)
+            INSERT INTO payment_orders (payment_event_id, seller_id, order_id, product_id, amount, payment_order_status)
             VALUES $valueClauses
         """.trimIndent()
     }

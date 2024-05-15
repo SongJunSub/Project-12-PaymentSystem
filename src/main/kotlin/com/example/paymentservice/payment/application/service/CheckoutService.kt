@@ -25,7 +25,7 @@ class CheckoutService (
     private fun createPaymentEvent(command: CheckoutCommand, products: List<Product>): PaymentEvent {
         return PaymentEvent(
             buyerId = command.buyerId,
-            orderId = command.idempote ncyKey,
+            orderId = command.idempotencyKey,
             orderName = products.joinToString { it.name },
             paymentOrders = products.map {
                 PaymentOrder(

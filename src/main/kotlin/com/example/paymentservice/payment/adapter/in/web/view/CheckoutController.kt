@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono
 
 @Controller
 @WebAdapter
-class CheckOutController (
+class CheckoutController (
     private val checkoutUseCase: CheckoutUseCase
 ) {
 
